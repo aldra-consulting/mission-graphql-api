@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app.Dockerfile
+    read_only: true
+    ports:
+      - 8006:8000
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=8000
+      - OIDC_ISSUER=http://auth-rest-api:8000
+      - OIDC_AUDIENCE=aldra.development
+      - INTROSPECTION=true
+      - PLAYGROUND=true
+      - SANITY_TOKEN
+      - SANITY_PROJECT_ID
+      - SANITY_DATASET=production
+      - SANITY_API_VERSION=2024-03-09
+      - NPM_CONFIG_UPDATE_NOTIFIER=false
+    networks:
+      aldra:
+        aliases:
+          - mission-graphql-api
+  sidecar:
+    build:
+      context: .
+      dockerfile: ./docker/sidecar.Dockerfile
+    ports:
+      - 8007:8001
+    networks:
+      aldra:
+        aliases:
+          - mission-graphql-api-sidecar
+networks:
+  aldra:
+    name: aldra

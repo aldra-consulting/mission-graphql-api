@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json.schemastore.org/eslintrc",
+  "root": true,
+  "extends": [
+    "@aldra-consulting/eslint-config-typescript",
+    "prettier",
+    "plugin:jest/recommended"
+  ],
+  "plugins": [
+    "prettier",
+    "jest"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": true,
+        "singleQuote": true,
+        "trailingComma": "es5"
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "parent",
+          "sibling",
+          "index",
+          "internal",
+          "object",
+          "type"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "@aldra-consulting/*",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "@project/**",
+            "group": "external",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": [
+          "@aldra-consulting/*",
+          "@(app|src|project)/*"
+        ],
+        "distinctGroup": true,
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true,
+          "orderImportKind": "desc"
+        }
+      }
+    ],
+    "import/no-extraneous-dependencies": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/**/*"
+      ],
+      "env": {
+        "node": true,
+        "jest/globals": true
+      },
+      "rules": {
+        "@typescript-eslint/no-empty-interface": [
+          "error",
+          {
+            "allowSingleExtends": true
+          }
+        ],
+        "class-methods-use-this": [
+          "error",
+          {
+            "enforceForClassFields": false
+          }
+        ],
+        "@typescript-eslint/unbound-method": "off"
+      }
+    },
+    {
+      "files": [
+        "*.json"
+      ],
+      "plugins": [
+        "json-format"
+      ],
+      "settings": {
+        "json/json-with-comments-files": [],
+        "json/sort-package-json": [
+          "$schema",
+          "name",
+          "version",
+          "description",
+          "type",
+          "repository",
+          "homepage",
+          "bugs",
+          "author",
+          "contributors",
+          "license",
+          "private",
+          "engines",
+          "publishConfig",
+          "files",
+          "main",
+          "module",
+          "types",
+          "exports",
+          "workspaces",
+          "scripts",
+          "dependencies",
+          "peerDependencies",
+          "devDependencies",
+          "overrides"
+        ]
+      }
+    }
+  ]
+}

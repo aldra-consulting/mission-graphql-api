@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@aldra-consulting/typescript-config/node",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "paths": {
+      "@project/env": [
+        "./src/env.ts"
+      ],
+      "@project/services": [
+        "./src/services/index.ts"
+      ],
+      "@project/utils/*": [
+        "./src/utils/*"
+      ],
+      "@project/types": [
+        "./src/types/index.d.ts"
+      ],
+      "@project/enums": [
+        "./src/types/enums.ts"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ],
+  "files": [
+    "jest.config.ts"
+  ],
+  "exclude": [
+    "lib",
+    "node_modules"
+  ]
+}

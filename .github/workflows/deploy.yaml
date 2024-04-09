@@ -1,0 +1,105 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+      region:
+        required: false
+        type: string
+        default: eu-west-1
+    secrets:
+      ALDRA_GITHUB_BOT_TOKEN:
+        required: true
+
+env:
+  HUSKY: 0
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.version }}
+
+      - uses: actions/setup-node@v4
+        with:
+          registry-url: https://npm.pkg.github.com
+          node-version: 20
+          cache: npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ALDRA_GITHUB_BOT_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci --quiet
+
+      - name: Build
+        run: npm run build
+
+      - name: Prune dependencies
+        run: npm prune --omit=dev
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ inputs.region }}
+          role-to-assume: ${{ vars.AWS_ROLE_FOR_GITHUB_ACTIONS }}
+
+      - name: Login to Amazon ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Docker meta for app
+        id: app-meta
+        uses: docker/metadata-action@v5
+        with:
+          context: git
+          images: ${{ steps.ecr-login.outputs.registry }}/${{ vars.ECR_REPOSITORY_APP }}
+          tags: |
+            type=semver,pattern={{version}},value=${{ inputs.version }}
+
+      - name: Docker meta for sidecar
+        id: sidecar-meta
+        uses: docker/metadata-action@v5
+        with:
+          context: git
+          images: ${{ steps.ecr-login.outputs.registry }}/${{ vars.ECR_REPOSITORY_SIDECAR }}
+          tags: |
+            type=semver,pattern={{version}},value=${{ inputs.version }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build, tag, and push app image to Amazon ECR
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/app.Dockerfile
+          push: true
+          tags: ${{ steps.app-meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
+
+      - name: Build, tag, and push sidecar image to Amazon ECR
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/sidecar.Dockerfile
+          push: true
+          tags: ${{ steps.sidecar-meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
