@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/aldra-consulting/mission-graphql-api/compare/1.0.1...1.0.2) (2024-04-14)
+
+
+### Bug Fixes
+
+* use correct package name ([39e8d0d](https://github.com/aldra-consulting/mission-graphql-api/commit/39e8d0d2cb9769c3f973dccedaba63e231608618))
+
 ## [1.0.1](https://github.com/aldra-consulting/mission-graphql-api/compare/1.0.0...1.0.1) (2024-04-14)
 
 
