@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package",
-  "name": "@aldra-consulting/accounts-graphql-api",
+  "name": "@aldra-consulting/mission-graphql-api",
   "version": "1.0.1",
   "description": "A GraphQL API for managing missions.",
   "type": "module",
