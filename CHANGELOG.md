@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/aldra-consulting/mission-graphql-api/compare/1.0.0...1.0.1) (2024-04-14)
+
+
+### Bug Fixes
+
+* add missing nginx.conf file ([398d2d1](https://github.com/aldra-consulting/mission-graphql-api/commit/398d2d1d75ccd4d6cb5c4c935710416083166d92))
+
 # 1.0.0 (2024-04-14)
 
 
