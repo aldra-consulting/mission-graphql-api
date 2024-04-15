@@ -1,6 +1,7 @@
 import { type IncomingHttpHeaders } from 'http';
 
 import { createClient } from '@sanity/client';
+import { GraphQLError } from 'graphql';
 import { Issuer } from 'openid-client';
 import { v4 as uuid } from 'uuid';
 
@@ -38,16 +39,27 @@ export const extractUser = async ({
 
   const token = header?.trim().replace(/^Bearer\s+/i, '');
 
-  if (isDefined(token)) {
-    const { sub, sanity_person_id: sanityPersonId } = await Issuer.discover(
-      issuer
-    ).then(({ Client }) =>
-      new Client({ client_id: audience }).userinfo<{
-        sanity_person_id: Identifier.Person;
-      }>(token)
-    );
+  if (isDefined(token) && token.length > 0) {
+    try {
+      const { sub, sanity_person_id: sanityPersonId } = await Issuer.discover(
+        issuer
+      ).then(({ Client }) =>
+        new Client({ client_id: audience }).userinfo<{
+          sanity_person_id: Identifier.Person;
+        }>(token)
+      );
 
-    return { id: sub as Identifier.User, sanityPersonId };
+      return { id: sub as Identifier.User, sanityPersonId };
+    } catch (error) {
+      throw new GraphQLError('Unauthenticated', {
+        extensions: {
+          code: 'UNAUTHENTICATED',
+          http: {
+            status: 401,
+          },
+        },
+      });
+    }
   }
 
   return null;

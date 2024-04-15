@@ -21,9 +21,12 @@ export default class<Context extends Apollo.Context = Apollo.Context>
         );
       }
 
-      throw new GraphQLError('Unauthorised', {
+      throw new GraphQLError('Forbidden', {
         extensions: {
-          code: 'UNAUTHORISED',
+          code: 'FORBIDDEN',
+          http: {
+            status: 403,
+          },
         },
       });
     },

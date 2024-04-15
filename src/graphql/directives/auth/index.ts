@@ -46,6 +46,9 @@ export default (schema: GraphQLSchema) =>
             throw new GraphQLError('Unauthenticated', {
               extensions: {
                 code: 'UNAUTHENTICATED',
+                http: {
+                  status: 401,
+                },
               },
             });
           }
