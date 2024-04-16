@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/aldra-consulting/mission-graphql-api/compare/1.0.2...1.1.0) (2024-04-16)
+
+
+### Features
+
+* add functionality to list bookmarks ([4340a6f](https://github.com/aldra-consulting/mission-graphql-api/commit/4340a6ff7d7851cbe83f505e84a8520293263d3b))
+* improve error handling ([66e7bb4](https://github.com/aldra-consulting/mission-graphql-api/commit/66e7bb4ba2607bc8d414a2a9df5a7e66351f637b))
+
 ## [1.0.2](https://github.com/aldra-consulting/mission-graphql-api/compare/1.0.1...1.0.2) (2024-04-14)
 
 
