@@ -1,6 +1,10 @@
-import { type Identifier, type Sanity } from '@project/types';
+import groq from 'groq';
+
+import { type Nullable, type Identifier, type Sanity } from '@project/types';
+import { isDefined } from '@project/utils/common';
 
 import SanityRepository from '..';
+import { SanityDocumentNotFoundError } from '../errors';
 
 export default class MissionBookmarksSanityRepository extends SanityRepository<Sanity.Document.Bookmark.Missions> {
   protected type = 'bookmark.missions' as const;
@@ -9,9 +13,46 @@ export default class MissionBookmarksSanityRepository extends SanityRepository<S
     throw new Error('Not implemented');
   }) satisfies SanityRepository<Sanity.Document.Bookmark.Missions>['findMany'];
 
-  findByIdOrThrow = ((): Promise<Sanity.Document.Bookmark.Missions> => {
-    throw new Error('Not implemented');
+  findByIdOrThrow = (async (
+    id: Identifier.Bookmark.Missions
+  ): Promise<Sanity.Document.Bookmark.Missions> => {
+    const query = groq`
+      *[_type == $type && _id == $id][0]
+    `;
+
+    const document = await this.client.fetch<
+      Nullable<Sanity.Document.Bookmark.Missions>
+    >(query, {
+      type: this.type,
+      id,
+    });
+
+    if (!isDefined(document)) {
+      throw new SanityDocumentNotFoundError<Sanity.Document.Bookmark.Missions>(
+        id,
+        this.type
+      );
+    }
+
+    return document;
   }) satisfies SanityRepository<Sanity.Document.Bookmark.Missions>['findByIdOrThrow'];
+
+  listBookmarks = async (
+    personId: Identifier.Person
+  ): Promise<Identifier.Mission[]> => {
+    try {
+      return this.findByIdOrThrow(
+        this.#constructMissionBookmarksDocumentId(personId)
+      ).then(({ missions }) => missions.map(({ _ref: id }) => id));
+    } catch (error) {
+      this.logger.warning(
+        error instanceof Error ? error.message : String(error),
+        { error }
+      );
+    }
+
+    return [];
+  };
 
   toggleBookmark = async (
     missionId: Identifier.Mission,

@@ -7,6 +7,23 @@ import { isDefined } from '@project/utils/common';
 export default class<Context extends Apollo.Context = Apollo.Context>
   implements MissionOperations<Context>
 {
+  [Operation.QUERY] = {
+    listBookmarks: async ({ context: { missionBookmarksService, user } }) => {
+      if (isDefined(user?.sanityPersonId)) {
+        return missionBookmarksService.listBookmarks(user.sanityPersonId);
+      }
+
+      throw new GraphQLError('Forbidden', {
+        extensions: {
+          code: 'FORBIDDEN',
+          http: {
+            status: 403,
+          },
+        },
+      });
+    },
+  } satisfies MissionOperations<Context>[Operation.QUERY];
+
   [Operation.MUTATION] = {
     toggleBookmark: async ({
       context: { missionBookmarksService, user },

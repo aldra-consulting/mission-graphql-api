@@ -13,6 +13,10 @@ export default gql`
   ${directives}
   ${inputs}
 
+  type Query {
+    listBookmarks: [ID!]! @authenticated
+  }
+
   type Mutation {
     toggleBookmark(input: ToggleBookmarkInput!): Boolean @authenticated
   }

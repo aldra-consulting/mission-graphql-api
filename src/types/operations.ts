@@ -5,6 +5,12 @@ import { type Identifier } from './identifier';
 
 export interface MissionOperations<Context extends object>
   extends GraphQL.Operations<Context> {
+  [Operation.QUERY]: {
+    listBookmarks: (
+      args: GraphQL.OperationFunctionArguments<Context, never>
+    ) => Promise<Identifier.Mission[]>;
+  };
+
   [Operation.MUTATION]: {
     toggleBookmark: (
       args: GraphQL.OperationFunctionArguments<

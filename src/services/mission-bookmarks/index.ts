@@ -14,6 +14,20 @@ export default class MissionBookmarksEnityService {
     this.#repository = repository;
   }
 
+  listBookmarks = async (
+    personId: Identifier.Person
+  ): Promise<Identifier.Mission[]> => {
+    try {
+      if (this.#repository instanceof MissionBookmarksSanityRepository) {
+        return this.#repository.listBookmarks(personId);
+      }
+
+      return [];
+    } catch (error) {
+      throw new Error('Unable to list mission bookmarks', { cause: error });
+    }
+  };
+
   toggleBookmark = async (
     missionId: Identifier.Mission,
     personId: Identifier.Person
