@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/aldra-consulting/mission-graphql-api/compare/1.1.0...1.1.1) (2024-04-18)
+
+
+### Bug Fixes
+
+* make entrypoint.sh executable ([45fb0bd](https://github.com/aldra-consulting/mission-graphql-api/commit/45fb0bd6e8a8dd6422ac690ea0bdd5200a7be590))
+
 # [1.1.0](https://github.com/aldra-consulting/mission-graphql-api/compare/1.0.2...1.1.0) (2024-04-16)
 
 
