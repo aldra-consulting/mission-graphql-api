@@ -35,12 +35,7 @@ const server = new ApolloServer<Apollo.Context>({
 try {
   await server.start();
 
-  app.use(
-    '/graphql',
-    cors(),
-    express.json(),
-    expressMiddleware(server, { context })
-  );
+  app.use('/', cors(), express.json(), expressMiddleware(server, { context }));
 
   app.use('/health', cors(), (_, res) => res.json({ status: 'UP' }));
 
