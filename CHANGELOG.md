@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/aldra-consulting/mission-graphql-api/compare/1.2.1...1.2.2) (2024-04-18)
+
+
+### Bug Fixes
+
+* register endpoints in correct order ([235b03b](https://github.com/aldra-consulting/mission-graphql-api/commit/235b03bc83df4ca9df2107308c06ad67fa93044d))
+
 ## [1.2.1](https://github.com/aldra-consulting/mission-graphql-api/compare/1.2.0...1.2.1) (2024-04-18)
 
 
