@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/aldra-consulting/mission-graphql-api/compare/1.1.1...1.1.2) (2024-04-18)
+
+
+### Bug Fixes
+
+* minor adjustment to TypeScript configuration ([965d95d](https://github.com/aldra-consulting/mission-graphql-api/commit/965d95de87c4e256e04c830a748729f796709126))
+
 ## [1.1.1](https://github.com/aldra-consulting/mission-graphql-api/compare/1.1.0...1.1.1) (2024-04-18)
 
 
