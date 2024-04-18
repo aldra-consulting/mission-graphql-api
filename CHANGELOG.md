@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/aldra-consulting/mission-graphql-api/compare/1.1.2...1.2.0) (2024-04-18)
+
+
+### Features
+
+* use embedded server ([8902d38](https://github.com/aldra-consulting/mission-graphql-api/commit/8902d386115f16dd8ad5fdfabdf37ed870d702a5))
+
 ## [1.1.2](https://github.com/aldra-consulting/mission-graphql-api/compare/1.1.1...1.1.2) (2024-04-18)
 
 
