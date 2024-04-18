@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/aldra-consulting/mission-graphql-api/compare/1.2.0...1.2.1) (2024-04-18)
+
+
+### Bug Fixes
+
+* change embedded GraphQL server path ([6138dd2](https://github.com/aldra-consulting/mission-graphql-api/commit/6138dd2a83edad168f24ecda6500053531c322bf))
+
 # [1.2.0](https://github.com/aldra-consulting/mission-graphql-api/compare/1.1.2...1.2.0) (2024-04-18)
 
 
