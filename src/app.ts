@@ -35,9 +35,9 @@ const server = new ApolloServer<Apollo.Context>({
 try {
   await server.start();
 
-  app.use('/', cors(), express.json(), expressMiddleware(server, { context }));
-
   app.use('/health', cors(), (_, res) => res.json({ status: 'UP' }));
+
+  app.use('/', cors(), express.json(), expressMiddleware(server, { context }));
 
   await new Promise<void>((resolve) => {
     httpServer.listen({ host, port }, resolve);
