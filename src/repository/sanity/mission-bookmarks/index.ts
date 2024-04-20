@@ -20,12 +20,12 @@ export default class MissionBookmarksSanityRepository extends SanityRepository<S
       *[_type == $type && _id == $id][0]
     `;
 
-    const document = await this.client.fetch<
-      Nullable<Sanity.Document.Bookmark.Missions>
-    >(query, {
-      type: this.type,
-      id,
-    });
+    const document = await this.client
+      .withConfig({ useCdn: false })
+      .fetch<Nullable<Sanity.Document.Bookmark.Missions>>(query, {
+        type: this.type,
+        id,
+      });
 
     if (!isDefined(document)) {
       throw new SanityDocumentNotFoundError<Sanity.Document.Bookmark.Missions>(
