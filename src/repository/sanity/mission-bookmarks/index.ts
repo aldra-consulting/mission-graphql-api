@@ -94,7 +94,7 @@ export default class MissionBookmarksSanityRepository extends SanityRepository<S
     this.client
       .patch(documentId)
       .append('missions', [{ _ref: missionId }])
-      .commit({ autoGenerateArrayKeys: true })
+      .commit({ autoGenerateArrayKeys: true, visibility: 'sync' })
       .catch((error: unknown) =>
         this.logger.error(
           error instanceof Error ? error.message : String(error),
@@ -110,7 +110,7 @@ export default class MissionBookmarksSanityRepository extends SanityRepository<S
     this.client
       .patch(documentId)
       .unset([`missions[_ref == "${missionId}"]`])
-      .commit()
+      .commit({ visibility: 'sync' })
       .catch((error: unknown) =>
         this.logger.error(
           error instanceof Error ? error.message : String(error),
