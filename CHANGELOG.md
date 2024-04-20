@@ -1,3 +1,11 @@
+## [1.2.3](https://github.com/aldra-consulting/mission-graphql-api/compare/1.2.2...1.2.3) (2024-04-20)
+
+
+### Bug Fixes
+
+* disable use of Sanity API CDN for listing bookmarks ([3739611](https://github.com/aldra-consulting/mission-graphql-api/commit/37396113b9795729d3f7d4d8a3fe1324e78814b4))
+* use syncronous mutations ([783ccd0](https://github.com/aldra-consulting/mission-graphql-api/commit/783ccd0437bb97d31f7807eadcbc04753f7afe70))
+
 ## [1.2.2](https://github.com/aldra-consulting/mission-graphql-api/compare/1.2.1...1.2.2) (2024-04-18)
 
 
