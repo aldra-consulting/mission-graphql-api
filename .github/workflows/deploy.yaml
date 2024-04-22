@@ -134,3 +134,25 @@ jobs:
           service: ${{ github.event.repository.name }}
           force-new-deployment: true
           wait-for-service-stability: true
+
+  notify-gateway-of-subgraph-change:
+    name: Notify GraphQL gateway of subgraph change
+    runs-on: ubuntu-latest
+    needs:
+      - deploy-ecs-service
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Trigger repository_dispatch event
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.ALDRA_GITHUB_BOT_TOKEN }}
+          script: |
+            github.rest.repos.createDispatchEvent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              event_type: 'subgraph_changed',
+              client_payload: {
+                environment: ${{ inputs.environment }},
+                region: ${{ inputs.region }}
+              }
+            })
